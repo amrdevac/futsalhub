@@ -2,6 +2,7 @@
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
+import DarkModeSwitcher from "./components/DarkModeSwitcher";
 
 const LoginPage: React.FC = () => {
   // extracting data from usesession as session
@@ -14,7 +15,10 @@ const LoginPage: React.FC = () => {
   return (
     <div className="flex h-screen text-black ">
       {/* Left Section: Form */}
-      <div className="flex flex-col justify-center w-full lg:w-1/2 px-10 bg-neutral">
+      <div className="flex flex-col justify-center w-full lg:w-1/2 px-10 bg-on-dark-full relative">
+        <div className="absolute right-5 top-5">
+          <DarkModeSwitcher />
+        </div>
         <div className="max-w-md mx-auto">
           {/* Logo */}
           <div className=" text-center">
@@ -28,7 +32,7 @@ const LoginPage: React.FC = () => {
             </span>
           </div>
 
-          <h2 className="mb-4 font-bold text-gray-900 flex flex-col justify-center items-center">
+          <h2 className="mb-4 font-bold text-gray-900 flex flex-col justify-center items-center dark:text-white">
             FutsalHub
             <small className="text-xs font-light">
               Booking Lapangan Gak Pake Ribet
@@ -37,7 +41,7 @@ const LoginPage: React.FC = () => {
 
           <form>
             <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
+              <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
                 Email
               </label>
               <input
@@ -48,7 +52,7 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
+              <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
                 Password
               </label>
               <input
@@ -59,7 +63,7 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-between mb-4">
-              <label className="flex items-center text-sm text-gray-700 select-none">
+              <label className="flex items-center text-sm text-gray-700 dark:text-white select-none">
                 <input
                   type="checkbox"
                   className="mr-2 focus:ring-2 focus:ring-blue-500"
@@ -80,7 +84,7 @@ const LoginPage: React.FC = () => {
 
             <div className="flex items-center justify-center space-x-2">
               <hr className="w-1/5 border-gray-300" />
-              <span className="text-sm text-gray-500">Or continue with</span>
+              <span className="text-sm text-gray-500 dark:text-gray-300">Or continue with</span>
               <hr className="w-1/5 border-gray-300" />
             </div>
 
@@ -90,7 +94,7 @@ const LoginPage: React.FC = () => {
             >
               <button
                 type="button"
-                className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+                className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 hover:bg-gray-100 dark:hover:text-base-100"
               >
                 <Image
                   src={process?.env?.NEXT_PUBLIC_GOOGLE_ICON ?? ""}
@@ -102,7 +106,7 @@ const LoginPage: React.FC = () => {
                 Google
               </button>
 
-              <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100">
+              <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 dark:hover:text-base-100">
                 <img
                   src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                   alt="GitHub"
