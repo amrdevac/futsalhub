@@ -24,4 +24,28 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .montserrat-font {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+    font-style: normal;
+  }
+}
+
+@layer components {
+  .bg-on-dark-full {
+    @apply bg-neutral dark:bg-base-100 dark:text-neutral;
+  }
+
+  .bg-on-dark-full-slate {
+    @apply bg-neutral dark:bg-slate-900 dark:text-neutral;
+  }
+  .hover-on-dark {
+    @apply hover:bg-base-100/10 dark:hover:bg-base-200/50 ;
+  }
+  .text-on-dark {
+    @apply text-neutral dark:text-base-100
+    /* dark:border-gray-700  */;
+  }
 }
