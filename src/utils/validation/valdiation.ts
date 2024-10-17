@@ -1,4 +1,3 @@
-import useBasicValidationStore from "@/store/useBasicValidationStore";
 import validationParam from "./message";
 import useValidationStore from "./validationStore";
 
