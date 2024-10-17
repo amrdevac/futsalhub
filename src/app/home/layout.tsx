@@ -12,11 +12,13 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import Image from "next/image";
 import {
   ChevronLeft,
+  ChevronRight,
   Close,
   Dashboard,
   Home,
   Logout,
   Search,
+  SearchRounded,
 } from "@mui/icons-material";
 // import { useRouter } from "next/navigation";
 
@@ -105,7 +107,6 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   const currentPath = usePathname();
   const lastSegment = currentPath.split("/").pop();
-  const formattedSegment = lastSegment?.replace(/-/g, " ") ?? "";
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -128,125 +129,145 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <div className="flex h-screen text-gray-900">
+    <div className="flex h-screen text-gray-900 ">
       {/* Sidebar */}
       <div
-        className="bg-on-dark-full w-2.5/12 overflow-y-auto flex flex-col gap-2  
-       scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50"
+        className=" w-2.5/12 overflow-y-auto flex flex-col 
+       scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-inherit"
       >
-        <div className="flex font-bold items-center gap-5 p-3 px-5     text-base-200  bg-accent  ">
+        <div className="flex font-bold items-center gap-5 p-3 px-5      text-base-200  bg-primary  dark:bg-accent  border-b-on-dark  ">
           <div className="flex justify-between w-full items-center">
             <div className="flex items-center gap-3">
               <Image
                 src={"/logo/futsalhub.png"}
                 alt="any logo"
-                width={38}
-                height={38}
+                className="shadow-lg"
+                width={41}
+                height={41}
               />
-              <div className="text-lg text-base-100">FutsalHub</div>
+              <div className="text-lg text-white dark:text-base-200">FutsalHub</div>
             </div>
-            <div>
+            {/* <div>
               <Close />
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="p-4 bg-gradient-to-r bg-on-dark-full  text-base-100 font-bold">
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between text-sm">
-              <div>
-                <div className="text-xs font-light">Selamat Datang,</div>
-                <div>FAHMI AMRULLOH</div>
-              </div>
-              <div>
-                <Image
-                  src="https://picsum.photos/30/30"
-                  width={30}
-                  height={30}
-                  alt="IMG"
-                  className="object-cover w-full h-full rounded-full"
-                />
-              </div>
-            </div>
-            <div className="flex justify-between items-center">
-              <div className=" text-xs">Programer / Jakarta</div>
-              <button className="text-xs font-light bg-accent  items-center text-on-dark p-1 rounded-full flex gap-1">
-                <Logout className="" fontSize="inherit" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center mx-4 gap-1 ">
-          <div>
-            <Dashboard className="text-primary" fontSize="inherit" />
-          </div>
-          <div className="w-full">
-            <input
-              ref={inputRef}
-              type="text"
-              className="input-sm w-full focus:outline-1 focus:outline-primary  rounded-md bg-transparent"
-              placeholder="Cari menu (Ctrl + k)"
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-        {/* Menu items */}
-        <div className=" flex flex-col gap-3">
-          {filteredMenu.map((menu, index) => (
-            <div key={index}>
-              {/* Parent Menu */}
-              <div
-                className={`flex justify-between items-center px-5 py-2 cursor-pointer duration-150 hover-on-dark ${
-                  lastSegment === menu.href?.split("/").pop()
-                    ? "bg-base-100/10"
-                    : ""
-                }`}
-                onClick={() => {
-                  if (menu.children) {
-                    toggleAccordion(menu.title);
-                  } else {
-                    router.push(menu.href);
-                  }
-                }}
-              >
-                <button
-                  type="button"
-                  className="flex text-sm items-center gap-3 focus:outline-1 focus:outline-blue-500"
-                >
-                  {menu.icon} <span>{menu.title}</span>
-                </button>
-                {menu.children && (
-                  <ChevronLeft
-                    className={`w-5 h-5 transition-transform transform ${
-                      open === menu.title ? "-rotate-90" : "rotate-0"
-                    }`}
+        <div className="bg-on-dark-full h-full pt-5 border-r dark:border-base-100 ">
+          <div className="p-4 bg-gradient-to-r bg-on-dark-full  text-base-100 font-bold  border-b-on-dark">
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-between text-sm">
+                <div>
+                  <div className="text-xs font-light">Selamat Datang,</div>
+                  <div>FAHMI AMRULLOH</div>
+                </div>
+                <div>
+                  <Image
+                    src="https://picsum.photos/30/30"
+                    width={30}
+                    height={30}
+                    alt="IMG"
+                    className="object-cover w-full h-full rounded-full"
                   />
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className=" text-xs">Programer / Jakarta</div>
+                <button className="text-xs  btn-error btn-outline btn btn-xs text-white  items-center  p-1 rounded-full flex gap-1">
+                  <Logout className="" fontSize="inherit" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="   flex items-center mx-4  mb-2 focus-within:shadow-lg mt-2 transition duration-200 rounded-md">
+            <div className="pl-3">
+              <SearchRounded className="text-primary" fontSize="inherit" />
+            </div>
+            <div className="w-full">
+              <input
+                ref={inputRef}
+                type="text"
+                className="input-sm w-full focus:outline-none outline-none  duration-300 bg-transparent rounded-md"
+                placeholder="Cari menu (Ctrl + k)"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Menu items */}
+          <div className=" flex flex-col gap-3">
+            {filteredMenu.map((menu, index) => (
+              <div key={index}>
+                {/* Parent Menu */}
+                <div
+                  className={`flex justify-between items-center px-5 py-2 cursor-pointer duration-150 hover-on-dark ${
+                    lastSegment === menu.href?.split("/").pop()
+                      ? "bg-base-100/10"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    if (menu.children) {
+                      toggleAccordion(menu.title);
+                    } else {
+                      router.push(menu.href);
+                    }
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="flex text-sm items-center gap-3 focus:outline-1 focus:outline-blue-500"
+                  >
+                    {menu.icon} <span>{menu.title}</span>
+                  </button>
+                  {menu.children && (
+                    <ChevronLeft
+                      className={`w-5 h-5 transition-transform transform ${
+                        open === menu.title ? "-rotate-90" : "rotate-0"
+                      }`}
+                    />
+                  )}
+                </div>
+                {/* Children (Sub-menu) */}
+                {menu.children && (open === menu.title || searchTerm != "") && (
+                  <div className="ml-8 text-sm mt-2 select-none ">
+                    {menu.children.map((child, childIndex) => (
+                      <div
+                        key={childIndex}
+                        onClick={() => router.push(child.href)}
+                        className="block py-2 px-4 hover:bg-blue-10  cursor-pointer  "
+                      >
+                        <button
+                          type="button"
+                          className="focus:outline-blue-600"
+                        >
+                          {child.title}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
-              {/* Children (Sub-menu) */}
-              {menu.children && (open === menu.title || searchTerm != "") && (
-                <div className="ml-8 text-sm mt-2 select-none ">
-                  {menu.children.map((child, childIndex) => (
-                    <div
-                      key={childIndex}
-                      onClick={() => router.push(child.href)}
-                      className="block py-2 px-4 hover:bg-blue-10  cursor-pointer  "
-                    >
-                      <button type="button" className="focus:outline-blue-600">
-                        {child.title}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="bg-neutral dark:bg-base-200  w-full overflow-hidden">
         <div className="bg-white dark:bg-accent w-full  py-4   shadow-md capitalize px-5 mb-2.5 flex justify-between">
-          <div>{formattedSegment}</div>
+          <div className=" flex items-center text-sm">
+            {currentPath.split("/").map((data, key) => {
+              return (
+                <div className=" ">
+                  <div className="flex items-center">
+                    {data.split("-").join(" ")}
+                    {key != 0 && key != currentPath.split("/").length - 1 && (
+                      <ChevronRight fontSize="inherit" />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
           <DarkModeSwitcher />
         </div>
         <div className="h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-base-100  p-10  pb-20">

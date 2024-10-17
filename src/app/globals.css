@@ -37,15 +37,27 @@ body {
   .bg-on-dark-full {
     @apply bg-neutral dark:bg-base-100 dark:text-neutral;
   }
+  
+  .input-on-dark {
+    @apply bg-neutral dark:bg-base-200 dark:text-neutral dark:border-none dark:focus:outline-accent dark:focus:outline; 
+  }
+  .bg-on-dark-2 {
+    @apply bg-white dark:bg-base-100 dark:text-neutral;
+  }
 
   .bg-on-dark-full-slate {
     @apply bg-neutral dark:bg-slate-900 dark:text-neutral;
   }
+
   .hover-on-dark {
-    @apply hover:bg-base-100/10 dark:hover:bg-base-200/50 ;
+    @apply hover:bg-base-100/10 dark:hover:bg-base-200/50;
   }
   .text-on-dark {
-    @apply text-neutral dark:text-base-100
-    /* dark:border-gray-700  */;
+    @apply dark:text-neutral text-base-100;
+  }
+
+  .border-b-on-dark {
+    @apply border-b dark:border-b dark:border-base-200;
   }
 }
+
