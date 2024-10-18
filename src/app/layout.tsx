@@ -18,8 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <SessionWrapper>
-      <html lang="en" data-theme="corporate">
-        <body className={"montserrat-font"}>{children}</body>
+      <html lang="en" data-theme="mainTheme">
+        <body className={"montserrat-font text-base"}>{children}</body>
       </html>
     </SessionWrapper>
   );

@@ -94,7 +94,7 @@ const LoginPage: React.FC = () => {
             >
               <button
                 type="button"
-                className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 hover:bg-gray-100 dark:hover:text-base-100"
+                className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 hover:bg-gray-100 dark:hover:text-base-300"
               >
                 <Image
                   src={process?.env?.NEXT_PUBLIC_GOOGLE_ICON ?? ""}
@@ -106,7 +106,7 @@ const LoginPage: React.FC = () => {
                 Google
               </button>
 
-              <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 dark:hover:text-base-100">
+              <button className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-md hover:bg-gray-100 dark:hover:text-base-300">
                 <img
                   src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                   alt="GitHub"

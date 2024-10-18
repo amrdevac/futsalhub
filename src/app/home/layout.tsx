@@ -153,7 +153,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         <div className="bg-on-dark-full h-full pt-5 border-r dark:border-base-100 ">
-          <div className="p-4 bg-gradient-to-r bg-on-dark-full  text-base-100 font-bold  border-b-on-dark">
+          <div className="p-4 bg-gradient-to-r bg-on-dark-full  text-base-300 font-bold  border-b-on-dark">
             <div className="flex flex-col gap-4">
               <div className="flex justify-between text-sm">
                 <div>
@@ -214,7 +214,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 >
                   <button
                     type="button"
-                    className="flex text-sm items-center gap-3 focus:outline-1 focus:outline-blue-500"
+                    className="flex text-sm items-center gap-3 focus:outline-1 focus:outline-primary"
                   >
                     {menu.icon} <span>{menu.title}</span>
                   </button>
@@ -237,7 +237,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                       >
                         <button
                           type="button"
-                          className="focus:outline-blue-600"
+                          className="focus:outline-primary"
                         >
                           {child.title}
                         </button>
@@ -257,7 +257,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           <div className=" flex items-center text-sm">
             {currentPath.split("/").map((data, key) => {
               return (
-                <div className=" ">
+                <div className=" " key={key}>
                   <div className="flex items-center">
                     {data.split("-").join(" ")}
                     {key != 0 && key != currentPath.split("/").length - 1 && (

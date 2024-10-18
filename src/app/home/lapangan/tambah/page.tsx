@@ -16,6 +16,7 @@ import { ChangeInputToRupiah, FormatRupiah } from "@/utils/input/ToRupiah";
 import useAddLapanganStore from "@/store/Lapangan/useAddLapanganStore";
 import dd from "@/utils/dd/dd";
 import { OnlyNumber } from "@/utils/regex/replace";
+import { IMaskInput } from "react-imask";
 
 interface FieldFormData {
   name: string;
@@ -84,15 +85,15 @@ export default function FutsalFieldForm() {
       placeholder: "25x15 m",
       required: true,
       custom: (
-        <ReactInputMask
-          mask="99 x 99 m"
+        <IMaskInput
+          mask="00 x 00m"
           placeholder="Contoh: 25 x 25 m"
           className={basicInputStyleClass}
           value={mainStore.form.ukuran_lapangan}
-          onChange={(e) => {
+          onAccept={(value, mask) => {
             mainStore.setForm({
               col: "ukuran_lapangan",
-              val: e.target.value,
+              val: value,
             });
           }}
         />
@@ -168,15 +169,15 @@ export default function FutsalFieldForm() {
       required: true,
 
       custom: (
-        <ReactInputMask
-          mask="99:99 - 99:99"
+        <IMaskInput
+          mask="00:00 - 00:00"
           placeholder="08:00 - 14:00"
           className={basicInputStyleClass}
           value={mainStore.form.waktu_operasional}
-          onChange={(e) => {
+          onAccept={(value, mask) => {
             mainStore.setForm({
-              col: "ketersediaan",
-              val: e.target.value,
+              col: "waktu_operasional",
+              val: value,
             });
           }}
         />

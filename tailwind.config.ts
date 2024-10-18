@@ -25,14 +25,29 @@ const config: Config = {
     plugins: [require("daisyui"), require("tailwind-scrollbar")],
   daisyui: {
     themes: [
+      "corporate",
       {
-        mytheme: {
+        mainTheme: {
           primary: "#1CA0B5",
           secondary: "#25808A",
           accent: "#1affa0",
           neutral: "#F7F8F3",
           "base-100": "#243F39",
           "base-200": "#162723",
+          "base-300": "#162723",
+          info: "#00d5ff",
+          success: "#1affa0",
+          warning: "#ffd301",
+          error: "#ff5d90",
+        },
+        anotherTheme: {
+          primary: "#C63C51",
+          secondary: "#25808A",
+          accent: "#D95F59",
+          neutral: "#F7F8F3",
+          "base-100": "#8C3061",
+          "base-200": "#522258",
+          "base-300": "#522258",
           info: "#00d5ff",
           success: "#1affa0",
           warning: "#ffd301",
