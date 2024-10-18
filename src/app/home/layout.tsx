@@ -142,8 +142,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 src={"/logo/futsalhub.png"}
                 alt="any logo"
                 className="shadow-lg"
-                width={38}
-                height={38}
+                width={25}
+                height={25}
               />
               <div className="text-lg text-white dark:text-base-200">FutsalHub</div>
             </div>
@@ -160,13 +160,13 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                   <div className="text-xs font-light">Selamat Datang,</div>
                   <div>FAHMI AMRULLOH</div>
                 </div>
-                <div>
+                <div className="rounded-full overflow-hidden">
                   <Image
                     src="https://picsum.photos/30/30"
-                    width={30}
-                    height={30}
+                    width={40}
+                    height={40}
                     alt="IMG"
-                    className="object-cover w-full h-full rounded-full"
+                    className=" rounded-full"
                   />
                 </div>
               </div>
