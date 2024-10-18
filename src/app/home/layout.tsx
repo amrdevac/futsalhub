@@ -133,7 +133,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
       {/* Sidebar */}
       <div
         className=" w-2.5/12 overflow-y-auto flex flex-col 
-       scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-inherit"
+       scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-base-100"
       >
         <div className="flex font-bold items-center gap-5 p-3 px-5      text-base-200  bg-primary  dark:bg-accent  border-b-on-dark  ">
           <div className="flex justify-between w-full items-center">
@@ -142,8 +142,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 src={"/logo/futsalhub.png"}
                 alt="any logo"
                 className="shadow-lg"
-                width={41}
-                height={41}
+                width={38}
+                height={38}
               />
               <div className="text-lg text-white dark:text-base-200">FutsalHub</div>
             </div>
@@ -233,7 +233,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                       <div
                         key={childIndex}
                         onClick={() => router.push(child.href)}
-                        className="block py-2 px-4 hover:bg-blue-10  cursor-pointer  "
+                        className="block py-2 px-4 hover:bg-blue-10 hover-on-dark  cursor-pointer  "
                       >
                         <button
                           type="button"

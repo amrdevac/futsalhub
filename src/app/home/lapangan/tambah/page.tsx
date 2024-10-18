@@ -2,9 +2,6 @@
 
 "use client";
 import { ChangeEvent, useState } from "react";
-import UploadFoto from "./comps/UploadFoto";
-import { FormGenerator } from "@/app/components/BasicForm/BasicFormV1";
-import { FrameData } from "@/app/components/BasicForm/variable";
 import BasicInput, {
   BaseInputProps,
   basicInputStyleClass,
@@ -212,7 +209,6 @@ export default function FutsalFieldForm() {
           Simpan
         </button>
       </form>
-      {/* <FormGenerator formData={basicForm} labelPosition="side" /> */}
     </div>
   );
 }
