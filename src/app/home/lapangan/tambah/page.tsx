@@ -17,6 +17,8 @@ import { IMaskInput } from "react-imask";
 import { useConfirmationStore } from "@/store/ConfirmDialog/useConfirmDialogStore";
 import { ConfirmDialog } from "@/store/ConfirmDialog/Components/ConfirmDialog";
 import mainAPI from "@/utils/axios/mainAPI";
+import { validateInput } from "@/utils/validation/valdiation";
+import ValidationParse from "@/utils/validation/valdiationParse";
 
 interface FieldFormData {
   name: string;
@@ -62,6 +64,7 @@ export default function FutsalFieldForm() {
           val: e.target.value,
         });
       },
+      bottomLable: <ValidationParse inputName={"nama"} />,
     },
     {
       label: "Jenis Lapangan",
@@ -77,16 +80,19 @@ export default function FutsalFieldForm() {
           val: e.target.value,
         });
       },
+      bottomLable: <ValidationParse inputName={"jenis"} />,
     },
     {
       label: "Ukuran Lapangan",
-      name: "ukuran_lapangan",
       grid: 4,
+      name: "ukuran",
       type: "custom",
       placeholder: "25x15 m",
       required: false,
+      bottomLable: <ValidationParse inputName={"ukuran"} />,
       custom: (
         <IMaskInput
+          name="ukuran"
           mask="00 x 00m"
           placeholder="Contoh: 25 x 25 m"
           className={basicInputStyleClass}
@@ -164,13 +170,13 @@ export default function FutsalFieldForm() {
     },
     {
       label: "Waktu Operasional",
-      name: "waktu_oprasional",
       type: "custom",
-      placeholder: "08:00 - 22:00",
+      name: "waktu_oprasional",
+        placeholder: "08:00 - 22:00",
       required: false,
-
       custom: (
         <IMaskInput
+          name="waktu_oprasional"
           mask="00:00 - 00:00"
           placeholder="08:00 - 14:00"
           className={basicInputStyleClass}
@@ -202,6 +208,22 @@ export default function FutsalFieldForm() {
 
   const formHandler = (e: FormEvent) => {
     e.preventDefault();
+    const oriHarga = mainStore.form.harga_sewa;
+    const rule = {
+      nama: "required",
+      jenis: "required",
+      ukuran: "required",
+      fasilitas: "required",
+      harga_sewa: "required",
+      ketersediaan: "required",
+      waktu_oprasional: "required",
+      kapasitas_pemain: "required",
+      keterangan_tambahan: "required",
+    };
+    validateInput({
+      objInput: mainStore.form,
+      validation: rule,
+    });
 
     confirmStore.confirmDialog({
       idModal: "confirm-dialog",
@@ -212,6 +234,15 @@ export default function FutsalFieldForm() {
       actionOk: [
         {
           run: () => {
+            mainStore.form.harga_sewa = mainStore.form.harga_sewa
+              .split("Rp")
+              .join("")
+              .split(".")
+              .join("");
+          },
+        },
+        {
+          run: () => {
             return mainAPI({
               endpoint: "api/collections/lapangan/records",
               data: mainStore.form,
@@ -220,13 +251,17 @@ export default function FutsalFieldForm() {
             });
           },
         },
+        {
+          run: () => {
+            mainStore.form.harga_sewa = oriHarga;
+          },
+        },
       ],
     });
   };
   return (
     <div className="max-w-4xl mx-auto p-4  shadow-md rounded-lg text-sm  bg-on-dark-2">
       <ConfirmDialog id="confirm-dialog" />
-      {dd(mainStore.dataError)}
       <form onSubmit={formHandler} className="">
         <div className="grid grid-cols-12 gap-4">
           {basicInput.map((inputProps, idx) => (

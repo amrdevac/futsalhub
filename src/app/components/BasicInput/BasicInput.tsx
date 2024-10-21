@@ -1,5 +1,6 @@
 "use client";
 
+import ValidationParse from "@/utils/validation/valdiationParse";
 import useValidationStore from "@/utils/validation/validationStore";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
@@ -41,7 +42,7 @@ export interface BaseInputProps {
 
 interface CustomInputProps extends BaseInputProps {
   type: "custom";
-  name?: string;
+  name: string;
   custom: React.ReactNode; // Custom input
   value?: any;
   onChange?: (e: InputChangeEvent) => void;
@@ -189,7 +190,8 @@ const BasicInput: React.FC<InputProps> = ({
           />
         </div>
       )}
-      {bottomLable}
+      <ValidationParse inputName={name ?? ""} />
+      {/* {bottomLable} */}
     </div>
   );
 };

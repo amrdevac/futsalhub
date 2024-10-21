@@ -142,11 +142,13 @@ export const useConfirmationStore = create<ConfirmationState>((set, get) => ({
         try {
           await func.run(); // Coba jalankan fungsi run
         } catch (error: unknown) {
+          set({
+            isError: true,
+          });
           const objError = error as Error;
           confirmInfoStore.setDetailInfo({ msg: objError.message });
 
           const storeImpleneter = useStore.getState();
-          console.log(storeImpleneter.dataError.msgError)
           if (storeImpleneter.dataError.isError && storeImpleneter.dataError) {
             set(() => ({ errorMatrix: func.detailError }));
             confirmInfoStore.setDetailInfo({

@@ -1,4 +1,4 @@
-import { MainAPIRequest } from "@/utils/axios/axiosVariable";
+import { MainAPIRequest } from "@/utils/axios/mainAPI";
 import axios from "axios";
 
 export async function POST(req: any) {
@@ -24,11 +24,7 @@ export async function POST(req: any) {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        return Response.json({
-          status: error.response.status,
-          data: error.response.data,
-          headers: error.response.headers,
-        });
+        return Response.json(error.response.data,{status : error.status});
       } else if (error.request) {
         console.error("No Response Received: ", error.request);
       } else {

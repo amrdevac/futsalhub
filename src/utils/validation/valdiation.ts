@@ -81,10 +81,9 @@ export const validateInput = ({
       ? { error: true }
       : { error: false };
   if (validationResponse.error) {
-    // dispatch(setValidation({ validation: { ...arrValidationResult } }));
     mainValidation.setValidation(arrValidationResult);
     if (showToast) {
-      throw console.error("Validation errors found!");
+      throw console.error("Validation errors found!", arrValidationResult);
     }
   }
 
