@@ -27,6 +27,8 @@ import { useRouter } from "nextjs-toploader/app";
 import NextTopLoader from "nextjs-toploader";
 import { usePathname } from "next/navigation";
 import DarkModeSwitcher from "../components/DarkModeSwitcher";
+import BasicLoading from "@/store/ConfirmDialog/Components/ConfirmLoading";
+import { ConfirmInfo } from "@/store/ConfirmDialog/Components/ConfirmInfo";
 
 const menuSidebar = [
   {
@@ -130,6 +132,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex h-screen text-gray-900 ">
+      <BasicLoading />
+
       {/* Sidebar */}
       <div
         className=" w-2.5/12 overflow-y-auto flex flex-col 
@@ -145,11 +149,10 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 width={25}
                 height={25}
               />
-              <div className="text-lg text-white dark:text-base-200">FutsalHub</div>
+              <div className="text-lg text-white dark:text-base-200">
+                FutsalHub
+              </div>
             </div>
-            {/* <div>
-              <Close />
-            </div> */}
           </div>
         </div>
         <div className="bg-on-dark-full h-full pt-5 border-r dark:border-base-100 ">
@@ -235,10 +238,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                         onClick={() => router.push(child.href)}
                         className="block py-2 px-4 hover:bg-blue-10 hover-on-dark  cursor-pointer  "
                       >
-                        <button
-                          type="button"
-                          className="focus:outline-primary"
-                        >
+                        <button type="button" className="focus:outline-primary">
                           {child.title}
                         </button>
                       </div>
@@ -270,7 +270,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           </div>
           <DarkModeSwitcher />
         </div>
-        <div className="h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-base-100  p-10  pb-20">
+        <div className="h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-base-100  p-10  pb-20 ">
           <NextTopLoader
             color="#1affa0"
             initialPosition={0.08}
@@ -282,6 +282,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             speed={200}
             shadow="0 0 10px #1affa0,0 0 5px #1affa0"
           />
+          <ConfirmInfo />
           {children}
         </div>
       </div>

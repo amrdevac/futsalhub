@@ -1,7 +1,7 @@
 // Kondisi dimana user punya default value
 
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import BasicInput, {
   BaseInputProps,
   basicInputStyleClass,
@@ -14,6 +14,9 @@ import useAddLapanganStore from "@/store/Lapangan/useAddLapanganStore";
 import dd from "@/utils/dd/dd";
 import { OnlyNumber } from "@/utils/regex/replace";
 import { IMaskInput } from "react-imask";
+import { useConfirmationStore } from "@/store/ConfirmDialog/useConfirmDialogStore";
+import { ConfirmDialog } from "@/store/ConfirmDialog/Components/ConfirmDialog";
+import mainAPI from "@/utils/axios/mainAPI";
 
 interface FieldFormData {
   name: string;
@@ -43,33 +46,34 @@ const initialFormData: FieldFormData = {
 
 export default function FutsalFieldForm() {
   const mainStore = useAddLapanganStore();
+  const confirmStore = useConfirmationStore();
 
   const basicInput: InputProps[] = [
     {
       label: "Nama Lapangan",
-      name: "nama_lapangan",
+      name: "nama",
       type: "text",
       placeholder: "Nama Lapangan",
-      required: true,
-      value: mainStore.form.nama_lapangan,
+      required: false,
+      value: mainStore.form.nama,
       onChange: (e: InputChangeEvent) => {
         mainStore.setForm({
-          col: "nama_lapangan",
+          col: "nama",
           val: e.target.value,
         });
       },
     },
     {
       label: "Jenis Lapangan",
-      name: "jenis_lapangan",
+      name: "jenis",
       grid: 4,
       type: "text",
       placeholder: "Jenis Lapangan",
-      value: mainStore.form.jenis_lapangan,
-      required: true,
+      value: mainStore.form.jenis,
+      required: false,
       onChange(e) {
         mainStore.setForm({
-          col: "jenis_lapangan",
+          col: "jenis",
           val: e.target.value,
         });
       },
@@ -80,16 +84,16 @@ export default function FutsalFieldForm() {
       grid: 4,
       type: "custom",
       placeholder: "25x15 m",
-      required: true,
+      required: false,
       custom: (
         <IMaskInput
           mask="00 x 00m"
           placeholder="Contoh: 25 x 25 m"
           className={basicInputStyleClass}
-          value={mainStore.form.ukuran_lapangan}
+          value={mainStore.form.ukuran}
           onAccept={(value, mask) => {
             mainStore.setForm({
-              col: "ukuran_lapangan",
+              col: "ukuran",
               val: value,
             });
           }}
@@ -102,7 +106,7 @@ export default function FutsalFieldForm() {
       grid: 4,
       type: "text",
       placeholder: "10",
-      required: true,
+      required: false,
       value: mainStore.form.kapasitas_pemain,
       onChange(e) {
         mainStore.setForm({
@@ -116,7 +120,7 @@ export default function FutsalFieldForm() {
       name: "fasilitas",
       type: "text",
       placeholder: "Kamar Mandi, Loker",
-      required: true,
+      required: false,
       value: mainStore.form.fasilitas,
       onChange(e) {
         mainStore.setForm({
@@ -131,7 +135,7 @@ export default function FutsalFieldForm() {
       grid: 6,
       type: "text",
       placeholder: FormatRupiah("20000"),
-      required: true,
+      required: false,
       value: mainStore.form.harga_sewa,
       onChange(e) {
         mainStore.setForm({
@@ -149,7 +153,7 @@ export default function FutsalFieldForm() {
         { label: "Tersedia", value: "tersedia" },
         { label: "Tidak Tersedia", value: "tidak_tersedia" },
       ],
-      required: true,
+      required: false,
       value: mainStore.form.ketersediaan,
       onChange(e) {
         mainStore.setForm({
@@ -160,20 +164,20 @@ export default function FutsalFieldForm() {
     },
     {
       label: "Waktu Operasional",
-      name: "waktu_operasional",
+      name: "waktu_oprasional",
       type: "custom",
       placeholder: "08:00 - 22:00",
-      required: true,
+      required: false,
 
       custom: (
         <IMaskInput
           mask="00:00 - 00:00"
           placeholder="08:00 - 14:00"
           className={basicInputStyleClass}
-          value={mainStore.form.waktu_operasional}
+          value={mainStore.form.waktu_oprasional}
           onAccept={(value, mask) => {
             mainStore.setForm({
-              col: "waktu_operasional",
+              col: "waktu_oprasional",
               val: value,
             });
           }}
@@ -196,10 +200,34 @@ export default function FutsalFieldForm() {
     },
   ];
 
+  const formHandler = (e: FormEvent) => {
+    e.preventDefault();
+
+    confirmStore.confirmDialog({
+      idModal: "confirm-dialog",
+      useStore: useAddLapanganStore,
+      activity: "save",
+      finishText: "berhasil menyimpan data",
+      btnCancel: "Batal",
+      actionOk: [
+        {
+          run: () => {
+            return mainAPI({
+              endpoint: "api/collections/lapangan/records",
+              data: mainStore.form,
+              method: "POST",
+              errorStore: mainStore,
+            });
+          },
+        },
+      ],
+    });
+  };
   return (
     <div className="max-w-4xl mx-auto p-4  shadow-md rounded-lg text-sm  bg-on-dark-2">
-      {/* {dd(mainStore.form)} */}
-      <form action="" className="">
+      <ConfirmDialog id="confirm-dialog" />
+      {dd(mainStore.dataError)}
+      <form onSubmit={formHandler} className="">
         <div className="grid grid-cols-12 gap-4">
           {basicInput.map((inputProps, idx) => (
             <BasicInput key={idx} {...inputProps} />
