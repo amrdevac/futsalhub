@@ -110,6 +110,7 @@ const validationRun = (
   //   _ip();
   _lessThanNum();
   _moreThanNum();
+  _rangeTime24Validation();
   //   _arrRequiredValidation();
   //   _alphaNumStrip();
   //   _alphaNumMinus();
@@ -266,6 +267,55 @@ const _maxChar = () => {
               validationParam["maxChar"].replace("___", getMatcher)
           );
         }
+      }
+    }
+  }
+};
+
+const _rangeTime24Validation = () => {
+  if (validateType?.includes("rangeTime24")) {
+    const theValidateType = validateType.split(":")[0];
+
+    if (theValidateType === "rangeTime24") {
+      const times = InputValue.split(" - ");
+
+      // Pastikan input memiliki dua bagian waktu yang dipisahkan oleh " - "
+      if (times.length !== 2) {
+        arrValidationResult[InputName].push(
+          validateCustomMessage ??
+            mainCustomResponse[theValidateType] ??
+            "Format waktu tidak valid, harus dalam bentuk HH:MM - HH:MM"
+        );
+        return;
+      }
+
+      const isValidTime = (time: string) => {
+        const [hours, minutes] = time.split(":");
+        if (
+          !hours ||
+          !minutes ||
+          isNaN(Number(hours)) ||
+          isNaN(Number(minutes)) ||
+          Number(hours) < 0 ||
+          Number(hours) > 23 ||
+          Number(minutes) < 0 ||
+          Number(minutes) > 59
+        ) {
+          return false;
+        }
+        return true;
+      };
+
+      // Validasi setiap bagian waktu (sebelum dan sesudah " - ")
+      const isStartTimeValid = isValidTime(times[0]);
+      const isEndTimeValid = isValidTime(times[1]);
+
+      if (!isStartTimeValid || !isEndTimeValid) {
+        arrValidationResult[InputName].push(
+          validateCustomMessage ??
+            mainCustomResponse[theValidateType] ??
+            validationParam["rangeTime24"]
+        );
       }
     }
   }

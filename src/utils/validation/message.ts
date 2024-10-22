@@ -18,5 +18,6 @@ validationParam["maxChar"] = "Input harus berisi maksimal ___ karakter";
 validationParam["date"] = "Tanggal tidak valid";
 validationParam["date2"] = "Format tanggal tidak valid";
 validationParam["regex"] = "Input ini tidak memenuhi format yang dibutuhkan";
+validationParam["rangeTime24"] ="Format waktu tidak valid, harus dalam bentuk HH:MM - HH:MM";
 
 export default validationParam;

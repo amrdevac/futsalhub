@@ -19,6 +19,7 @@ interface form {
 interface useLapanganInterface {
   form: form;
   dataError: DataError;
+  resetForm: () => void;
   setForm: <HASIL_EXTENDS extends keyof form>({
     col,
     val,
@@ -27,18 +28,20 @@ interface useLapanganInterface {
     val: form[HASIL_EXTENDS];
   }) => void;
 }
+
+const defaultForm = {
+  nama: "",
+  jenis: "",
+  ukuran: "",
+  fasilitas: "",
+  harga_sewa: "",
+  ketersediaan: "tersedia",
+  waktu_oprasional: "",
+  kapasitas_pemain: "",
+  keterangan_tambahan: "",
+};
 const useAddLapanganStore = create<useLapanganInterface>((set) => ({
-  form: {
-    nama: "",
-    jenis: "",
-    ukuran: "",
-    fasilitas: "",
-    harga_sewa: "",
-    ketersediaan: "tersedia",
-    waktu_oprasional: "",
-    kapasitas_pemain: "", 
-    keterangan_tambahan: "",
-  },
+  form: { ...defaultForm },
   ...AxiosErrorHandlerStore(set),
   setForm: ({ col, val }) => {
     set((state) => ({
@@ -46,6 +49,11 @@ const useAddLapanganStore = create<useLapanganInterface>((set) => ({
         ...state.form,
         [col]: val,
       },
+    }));
+  },
+  resetForm: () => {
+    set(() => ({
+      form: { ...defaultForm },
     }));
   },
 }));

@@ -189,7 +189,7 @@ const ManajLapangan = () => {
         ))}
       </div>
 
-      <div className=" bg-white min-h-96 shadow-sm">
+      <div className=" bg-on-dark-2 min-h-96 shadow-sm">
         <BasicTable
           responsive={true}
           showToolbar={true}

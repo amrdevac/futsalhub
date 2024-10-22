@@ -1,7 +1,7 @@
 // Kondisi dimana user punya default value
 
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import BasicInput, {
   BaseInputProps,
   basicInputStyleClass,
@@ -32,19 +32,6 @@ interface FieldFormData {
   hours: string;
   notes: string;
 }
-
-const initialFormData: FieldFormData = {
-  name: "",
-  type: "",
-  location: "",
-  size: "",
-  capacity: 0,
-  price: 0,
-  availability: "",
-  facilities: "",
-  hours: "",
-  notes: "",
-};
 
 export default function FutsalFieldForm() {
   const mainStore = useAddLapanganStore();
@@ -213,17 +200,17 @@ export default function FutsalFieldForm() {
       nama: "required",
       jenis: "required",
       ukuran: {
-        rule:"required|regex:^\\d+ X \\d+m$",
-        message:{
-          "regex": "Tidak sesuai format __ X __m"
-        }
+        rule: "required|regex:^\\d+ X \\d+m$",
+        message: {
+          regex: "Tidak sesuai format __ X __m",
+        },
       },
       fasilitas: "required",
       harga_sewa: "required",
       ketersediaan: "required",
-      waktu_oprasional: "required",
+      waktu_oprasional: "required|rangeTime24",
       kapasitas_pemain: "required|maxChar:2",
-      keterangan_tambahan: "required",
+      keterangan_tambahan: "maxChar:200",
     };
     validateInput({
       objInput: mainStore.form,
@@ -264,6 +251,11 @@ export default function FutsalFieldForm() {
       ],
     });
   };
+
+  useEffect(()=>{
+
+    mainStore.resetForm()
+  },[])
   return (
     <div className="max-w-4xl mx-auto p-4  shadow-md rounded-lg text-sm  bg-on-dark-2">
       <ConfirmDialog id="confirm-dialog" />
