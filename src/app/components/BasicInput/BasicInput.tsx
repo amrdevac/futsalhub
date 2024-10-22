@@ -10,7 +10,7 @@ export type InputChangeEvent = ChangeEvent<
 
 interface SelectOption {
   label: string;
-  value: string;
+  value: any;
 }
 
 type InputType =

@@ -143,8 +143,8 @@ export default function FutsalFieldForm() {
       type: "select",
       grid: 6,
       options: [
-        { label: "Tersedia", value: "tersedia" },
-        { label: "Tidak Tersedia", value: "tidak_tersedia" },
+        { label: "Tersedia", value: "true" },
+        { label: "Tidak Tersedia", value: "false" },
       ],
       required: false,
       value: mainStore.form.ketersediaan,

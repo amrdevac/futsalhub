@@ -12,6 +12,11 @@ import { data, frameData } from "@/app/components/BasicTable/exampleVari";
 import { numbFormatRupiah } from "@/utils/NumberFormat";
 import { Check, CheckBox, MoreVert } from "@mui/icons-material";
 import { FrameData } from "@/app/components/BasicTable/FrameDataType";
+import { useCallback, useEffect, useState } from "react";
+import mainAPI from "@/utils/axios/mainAPI";
+import useAddLapanganStore from "@/store/Lapangan/useAddLapanganStore";
+import useGetLapanganStore from "@/store/Lapangan/useGetLapanganStore";
+import dd from "@/utils/dd/dd";
 
 interface TypeLapanganFutsal {
   nama_lapangan: string;
@@ -21,7 +26,7 @@ interface TypeLapanganFutsal {
   kapasitas_pemain: number;
   fasilitas: string;
   data_penyewaan: string;
-  harga_sewa_per_jam: number;
+  harga_sewa: number;
   ketersediaan: boolean;
   waktu_operasional: string;
   keterangan_lainnya: string;
@@ -31,13 +36,13 @@ const ManajLapangan = () => {
     data: [
       {
         col: "Lapangan",
-        val: "nama_lapangan",
+        val: "nama",
         type: "string",
         align: "center",
       },
       {
         col: "Jenis",
-        val: "jenis_lapangan",
+        val: "jenis",
         type: "string",
         align: "center",
       },
@@ -49,7 +54,7 @@ const ManajLapangan = () => {
       },
       {
         col: "Ukuran",
-        val: "ukuran_lapangan",
+        val: "ukuran",
         type: "string",
         align: "center",
       },
@@ -61,24 +66,18 @@ const ManajLapangan = () => {
       },
       {
         col: "Fasilitas",
-        substring: 10 ,
+        substring: 10,
         val: "fasilitas",
         type: "string",
         align: "center",
       },
       {
-        col: "Penyewaan",
-        val: "data_penyewaan",
-        type: "string",
-        align: "center",
-      },
-      {
         col: "per 1 jam",
-        val: "harga_sewa_per_jam",
+        val: "harga_sewa",
         type: "custom",
         align: "center",
         custom: (e: TypeLapanganFutsal) => {
-          return numbFormatRupiah(e.harga_sewa_per_jam);
+          return numbFormatRupiah(e.harga_sewa);
         },
       },
       {
@@ -90,20 +89,20 @@ const ManajLapangan = () => {
           return e.ketersediaan ? (
             <div className="badge badge-success"></div>
           ) : (
-            <div className="badge bg-danger"></div>
+            <div className="badge badge-error"></div>
           );
         },
       },
       {
         col: "Waktu Operasional",
-        val: "waktu_operasional",
+        val: "waktu_oprasional",
         type: "string",
         align: "center",
       },
       {
         col: "Keterangan Lainnya",
         substring: 20,
-        val: "keterangan_lainnya",
+        val: "keterangan_tambahan",
         type: "string",
         align: "center",
       },
@@ -125,79 +124,43 @@ const ManajLapangan = () => {
     },
   };
 
-  // Menghitung total data
-  const totalData = lapanganFutsal.length;
+  const [data, setData] = useState([]);
+  const mainStore = useGetLapanganStore();
+  const getDataLapangan = useCallback(async () => {
+    const result = await mainAPI({
+      data: "",
+      endpoint: "api/collections/lapangan/records",
+      method: "GET",
+      params: [
+        {
+          col: "perPage",
+          val: "1",
+        },
+        {
+          col: "sort",
+          val: "-created",
+        },
+      ],
+      errorStore: mainStore,
+    });
+    setData(result.data.items);
+  }, []);
 
-  // Menghitung ketersediaan
-  const ketersediaanTrue = lapanganFutsal.filter(
-    (lapangan) => lapangan.ketersediaan
-  ).length;
-  const ketersediaanFalse = totalData - ketersediaanTrue;
-
-  // Menghitung total kapasitas dari lapangan yang tersedia
-  const totalKapasitas = lapanganFutsal
-    .filter((lapangan) => lapangan.ketersediaan)
-    .reduce((total, lapangan) => total + lapangan.kapasitas_pemain, 0);
-
-  // Menghitung rata-rata harga sewa dari lapangan yang tersedia
-  const totalHargaSewa = lapanganFutsal
-    .filter((lapangan) => lapangan.ketersediaan)
-    .reduce((total, lapangan) => total + lapangan.harga_sewa_per_jam, 0);
-  const rataRataHargaSewa =
-    ketersediaanTrue > 0 ? totalHargaSewa / ketersediaanTrue : 0;
-
-  const rangkumanData = [
-    {
-      name: "Total Data",
-      value: totalData,
-      change: 0, // Anda bisa menyesuaikan nilai ini jika ada perubahan
-      changeType: "up", // Anda bisa menyesuaikan ini sesuai konteks
-    },
-    {
-      name: "Ketersediaan Tersedia",
-      value: ketersediaanTrue,
-      change: 0, // Anda bisa menyesuaikan nilai ini jika ada perubahan
-      changeType: "up", // Anda bisa menyesuaikan ini sesuai konteks
-    },
-    {
-      name: "Ketersediaan Tidak Tersedia",
-      value: ketersediaanFalse,
-      change: 0, // Anda bisa menyesuaikan nilai ini jika ada perubahan
-      changeType: "down", // Anda bisa menyesuaikan ini sesuai konteks
-    },
-    {
-      name: "Total Kapasitas",
-      value: totalKapasitas,
-      change: 0, // Anda bisa menyesuaikan nilai ini jika ada perubahan
-      changeType: "up", // Anda bisa menyesuaikan ini sesuai konteks
-    },
-    {
-      name: "Rata-rata Harga Sewa",
-      value: numbFormatRupiah(Math.round(rataRataHargaSewa)), // Membulatkan rata-rata harga sewa
-      change: 0, // Anda bisa menyesuaikan nilai ini jika ada perubahan
-      changeType: "up", // Anda bisa menyesuaikan ini sesuai konteks
-    },
-  ];
+  useEffect(() => {
+    getDataLapangan();
+  }, []);
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex  gap-4">
-        {rangkumanData.map((stat, index) => (
-          <div key={index} className="w-full">
-            <StatCard {...stat} />
-          </div>
-        ))}
-      </div>
-
       <div className=" bg-on-dark-2 min-h-96 shadow-sm">
         <BasicTable
           responsive={true}
           showToolbar={true}
-          data={lapanganFutsal}
+          data={data}
           frameData={frameData}
-          showNumbering={false} // Opsi nomor urutan, bisa diatur true/false
-          limit={5} // Opsi limit untuk jumlah item per halaman
-          offset={0} // Opsi offset, bisa diatur sesuai kebutuhan
+          showNumbering={false}
+          limit={5}
+          offset={0}
         />
       </div>
     </div>

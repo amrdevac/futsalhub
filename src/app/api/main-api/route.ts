@@ -10,21 +10,32 @@ export async function POST(req: any) {
   }
   try {
     const baseURL = process.env.NEXT_API_URL_BACKEND ?? "##";
+    // const params = body.params ? { [body.params.col]: body.params.val } : {};
+    let params: Record<string, string> = {};
+
+    if (body.params) {
+      body.params.forEach((param) => {
+        params[param.col] = param.val;
+      });
+    }
     const axiosInstance = axios.create({
       baseURL: baseURL,
-      method: body.method, 
+      method: body.method,
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     const response = await axiosInstance(body.endpoint ?? "", {
+      params,
       data: body.data,
     });
+    console.log(response, "response");
+    return Response.json(response.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        return Response.json(error.response.data,{status : error.status});
+        return Response.json(error.response.data, { status: error.status });
       } else if (error.request) {
         console.error("No Response Received: ", error.request);
       } else {
@@ -37,5 +48,4 @@ export async function POST(req: any) {
       { status: 500 }
     );
   }
-  return Response.json({ data: body });
 }

@@ -14,8 +14,8 @@ const StatCard: React.FC<StatCardProps> = ({
   changeType,
 }) => {
   return (
-    <div className=" p-4 rounded-md  bg-white shadow-md ">
-      <div className="stat-title">{name}</div>
+    <div className=" p-4 rounded-md  bg-on-dark-full shadow-md  text-on-dark">
+      <div className="text-gray-500 dark:stat-title">{name}</div>
       <div className="stat-value">{value}</div>
       <div
         className={`stat-desc ${
