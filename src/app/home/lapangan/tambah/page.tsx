@@ -17,7 +17,7 @@ import { IMaskInput } from "react-imask";
 import { useConfirmationStore } from "@/store/ConfirmDialog/useConfirmDialogStore";
 import { ConfirmDialog } from "@/store/ConfirmDialog/Components/ConfirmDialog";
 import mainAPI from "@/utils/axios/mainAPI";
-import { validateInput } from "@/utils/validation/valdiation";
+import { validateInput, Validation } from "@/utils/validation/valdiation";
 import ValidationParse from "@/utils/validation/valdiationParse";
 
 interface FieldFormData {
@@ -93,7 +93,7 @@ export default function FutsalFieldForm() {
       custom: (
         <IMaskInput
           name="ukuran"
-          mask="00 x 00m"
+          mask="00 X 00m"
           placeholder="Contoh: 25 x 25 m"
           className={basicInputStyleClass}
           value={mainStore.form.ukuran}
@@ -172,7 +172,7 @@ export default function FutsalFieldForm() {
       label: "Waktu Operasional",
       type: "custom",
       name: "waktu_oprasional",
-        placeholder: "08:00 - 22:00",
+      placeholder: "08:00 - 22:00",
       required: false,
       custom: (
         <IMaskInput
@@ -209,15 +209,20 @@ export default function FutsalFieldForm() {
   const formHandler = (e: FormEvent) => {
     e.preventDefault();
     const oriHarga = mainStore.form.harga_sewa;
-    const rule = {
+    const rule: Validation = {
       nama: "required",
       jenis: "required",
-      ukuran: "required",
+      ukuran: {
+        rule:"required|regex:^\\d+ X \\d+m$",
+        message:{
+          "regex": "Tidak sesuai format __ X __m"
+        }
+      },
       fasilitas: "required",
       harga_sewa: "required",
       ketersediaan: "required",
       waktu_oprasional: "required",
-      kapasitas_pemain: "required",
+      kapasitas_pemain: "required|maxChar:2",
       keterangan_tambahan: "required",
     };
     validateInput({

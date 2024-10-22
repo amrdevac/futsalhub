@@ -104,7 +104,9 @@ const validationRun = (
   _numericValidation();
   _whiteSpace();
   _moreThanSpace();
-  //   _alphaNum();
+  _regex();
+  _maxChar();
+  // _alphaNum();
   //   _ip();
   _lessThanNum();
   _moreThanNum();
@@ -221,13 +223,50 @@ const _date2 = () => {
   }
 };
 
-// Implement any other necessary validation functions similarly
-
 const _moreThanSpace = () => {
   if (validateType == "moreThanSpace") {
-    var regex = /^ *$/;
+    let regex = /^ *$/;
     if (regex.test(InputValue)) {
       arrValidationResult[InputName].push(validationParam[validateType]);
+    }
+  }
+};
+
+const _regex = () => {
+  // if (validateType?.includes("regex")) {
+  if (validateType.startsWith("regex:")) {
+    const regexPattern = validateType.split("regex:")[1]; // Ambil pola regex yang diberikan
+    const regex = new RegExp(regexPattern); // Buat RegExp dari pola yang diberikan
+
+    // Memeriksa apakah nilai input sesuai dengan regex
+    if (!regex.test(InputValue)) {
+      arrValidationResult[InputName].push(
+        validateCustomMessage ||
+          mainCustomResponse[validateType] ||
+          validationParam[validateType] ||
+          `The input does not match the required pattern: ${regexPattern}` // Pesan default
+      );
+    }
+  }
+  // }
+};
+
+const _maxChar = () => {
+  if (validateType?.includes("maxChar")) {
+    const getMatcher = validateType.split(":")[1];
+    const theValidateType = validateType.split(":")[0];
+
+    if (theValidateType == "maxChar") {
+      if (InputValue.length !== 0 && InputValue.length > getMatcher) {
+        if (validateCustomMessage) {
+          arrValidationResult[InputName].push(validateCustomMessage);
+        } else {
+          arrValidationResult[InputName].push(
+            mainCustomResponse[theValidateType] ??
+              validationParam["maxChar"].replace("___", getMatcher)
+          );
+        }
+      }
     }
   }
 };

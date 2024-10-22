@@ -1,21 +1,22 @@
 const validationParam: { [key: string]: string } = {};
-validationParam["required"] = "Kolom ini tidak boleh kosong";
-validationParam["numeric"] = "Kolom ini harus berupa nilai numerik";
-validationParam["noSpace"] = "Kolom ini tidak boleh mengandung spasi";
+validationParam["required"] = "Input ini tidak boleh kosong";
+validationParam["numeric"] = "Input ini harus berupa nilai numerik";
+validationParam["noSpace"] = "Input ini tidak boleh mengandung spasi";
 validationParam["moreThanSpace"] =
-  "Kolom ini membutuhkan lebih dari satu spasi";
-validationParam["alphaNum"] = "Kolom ini hanya menerima alfabet dan numerik";
+  "Input ini membutuhkan lebih dari satu spasi";
+validationParam["alphaNum"] = "Input ini hanya boleh berisi huruf dan angka";
 validationParam["alphaNumStrip"] = "Tidak boleh mengandung karakter khusus";
 validationParam["alphaNumMinus"] =
-  "Kolom ini hanya menerima Huruf, Numerik, dan Minus '-'";
-validationParam["ip"] = "Format input harus hanya berisi numerik dan '.'";
-validationParam["arrRequired"] = "Kolom ini tidak boleh kosong";
-validationParam["email"] = "Email tidak valid";
-validationParam["confirmation"] = "Kolom ini tidak cocok dengan ___ ";
-validationParam["must"] = "Value Kolom ini harus  ___ ";
-validationParam["minChar"] = "Value Kolom minimal  ___ karakter";
-validationParam["maxChar"] = "Value Kolom maksimal  ___ karakter";
-validationParam["date"] = "Input tanggal tidak valid";
-validationParam["date2"] = "Input tanggal tidak valid";
+  "Input ini hanya boleh berisi huruf, angka, dan tanda minus '-'";
+validationParam["ip"] = "Format input harus berupa alamat IP yang valid";
+validationParam["arrRequired"] = "Input ini tidak boleh kosong";
+validationParam["email"] = "Alamat email tidak valid";
+validationParam["confirmation"] = "Input ini tidak cocok dengan ___";
+validationParam["must"] = "Input ini harus berisi ___";
+validationParam["minChar"] = "Input harus berisi minimal ___ karakter";
+validationParam["maxChar"] = "Input harus berisi maksimal ___ karakter";
+validationParam["date"] = "Tanggal tidak valid";
+validationParam["date2"] = "Format tanggal tidak valid";
+validationParam["regex"] = "Input ini tidak memenuhi format yang dibutuhkan";
 
 export default validationParam;

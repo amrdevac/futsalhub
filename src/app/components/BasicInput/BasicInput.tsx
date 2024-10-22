@@ -190,7 +190,7 @@ const BasicInput: React.FC<InputProps> = ({
           />
         </div>
       )}
-      <ValidationParse inputName={name ?? ""} />
+      <ValidationParse inputName={name ?? ""}  className="text-xs"/>
       {/* {bottomLable} */}
     </div>
   );
