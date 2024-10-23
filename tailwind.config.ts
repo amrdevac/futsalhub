@@ -30,7 +30,7 @@ const config: Config = {
       {
         mainTheme: {
           primary: "#1CA0B5",
-          secondary: "#25808A",
+          secondary: "#fff",
           accent: "#1affa0",
           neutral: "#F7F8F3",
           "base-100": "#243F39",
@@ -43,7 +43,7 @@ const config: Config = {
         },
         anotherTheme: {
           primary: "#C63C51",
-          secondary: "#25808A",
+          secondary: "#fff",
           accent: "#D95F59",
           neutral: "#F7F8F3",
           "base-100": "#8C3061",

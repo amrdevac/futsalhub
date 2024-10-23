@@ -184,7 +184,6 @@ export const featuredData = [
   },
 ];
 
-
 export const totalVisit = [
   {
     name: "Total Visit",
@@ -452,3 +451,5 @@ export const lapanganFutsal = [
     keterangan_lainnya: "Lapangan dengan suasana yang nyaman",
   },
 ];
+
+

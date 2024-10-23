@@ -1,22 +1,12 @@
 "use client";
-import BasicTable from "@/app/components/BasicTable/BasicTableV1";
-import {
-  bookings,
-  featuredData,
-  lapanganFutsal,
-  totalVisit,
-} from "../variable";
-import StatCard from "./comps/Card";
-import FeaturedCard from "./comps/FeaturedCard";
-import { data, frameData } from "@/app/components/BasicTable/exampleVari";
 import { numbFormatRupiah } from "@/utils/NumberFormat";
-import { Check, CheckBox, MoreVert } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 import { FrameData } from "@/app/components/BasicTable/FrameDataType";
 import { useCallback, useEffect, useState } from "react";
 import mainAPI from "@/utils/axios/mainAPI";
-import useAddLapanganStore from "@/store/Lapangan/useAddLapanganStore";
 import useGetLapanganStore from "@/store/Lapangan/useGetLapanganStore";
-import dd from "@/utils/dd/dd";
+import BasicTableV2 from "@/app/components/BasicTable/BasicTableV2";
+import { defaultPerPage } from "@/app/components/BasicTable/variable";
 
 interface TypeLapanganFutsal {
   nama_lapangan: string;
@@ -100,7 +90,7 @@ const ManajLapangan = () => {
         align: "center",
       },
       {
-        col: "Keterangan Lainnya",
+        col: "Keterangan",
         substring: 20,
         val: "keterangan_tambahan",
         type: "string",
@@ -124,9 +114,16 @@ const ManajLapangan = () => {
     },
   };
 
-  const [data, setData] = useState([]);
+  interface data {
+    items: any[];
+    totalItems: number;
+  }
+  const [data, setData] = useState<data>({
+    items: [],
+    totalItems: 0,
+  });
   const mainStore = useGetLapanganStore();
-  const getDataLapangan = useCallback(async () => {
+  const getDataLapangan = useCallback(async (page: number) => {
     const result = await mainAPI({
       data: "",
       endpoint: "api/collections/lapangan/records",
@@ -134,7 +131,11 @@ const ManajLapangan = () => {
       params: [
         {
           col: "perPage",
-          val: "1",
+          val: defaultPerPage,
+        },
+        {
+          col: "page",
+          val: page.toString(),
         },
         {
           col: "sort",
@@ -143,24 +144,26 @@ const ManajLapangan = () => {
       ],
       errorStore: mainStore,
     });
-    setData(result.data.items);
+    setData(result.data);
   }, []);
 
   useEffect(() => {
-    getDataLapangan();
+    getDataLapangan(0);
   }, []);
 
   return (
     <div className="flex flex-col gap-10">
-      <div className=" bg-on-dark-2 min-h-96 shadow-sm">
-        <BasicTable
+      <div className=" bg-on-dark-2  shadow-sm">
+        <BasicTableV2
           responsive={true}
           showToolbar={true}
-          data={data}
+          data={data.items}
           frameData={frameData}
-          showNumbering={false}
-          limit={5}
+          // showNumbering={false}
+          // limit={5}
           offset={0}
+          totalData={data.totalItems} // Kirim total data
+          pagination={(page) => getDataLapangan(page)}
         />
       </div>
     </div>

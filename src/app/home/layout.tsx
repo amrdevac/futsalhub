@@ -139,7 +139,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
         className=" w-2.5/12 overflow-y-auto flex flex-col 
        scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-base-100"
       >
-        <div className="flex font-bold items-center gap-5 p-3 px-5      text-base-200  bg-primary  dark:bg-accent  border-b-on-dark  ">
+        <div className="flex font-bold items-center gap-5 p-3 px-5      text-base-200  bg-primary  dark:bg-accent  border-b-on-dark   ">
           <div className="flex justify-between w-full items-center">
             <div className="flex items-center gap-3">
               <Image
@@ -155,8 +155,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
         </div>
-        <div className="bg-on-dark-full h-full pt-5 border-r dark:border-base-100 ">
-          <div className="p-4 bg-gradient-to-r bg-on-dark-full  text-base-300 font-bold  border-b-on-dark">
+        <div className="bg-on-dark-full  h-full pt-5 border-r dark:border-base-100  bg-secondary">
+          <div className="p-4 bg-gradient-to-r bg-on-dark-full  text-base-300 font-bold  border-b-on-dark bg-secondary">
             <div className="flex flex-col gap-4">
               <div className="flex justify-between text-sm">
                 <div>
@@ -273,9 +273,9 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
         <div className="h-screen overflow-y-auto scrollbar-thumb-gray-500 scrollbar-thin scrollbar-track-gray-50 dark:scrollbar-track-base-100  p-10  pb-20 ">
           <NextTopLoader
             color="#1CA0B5"
-            initialPosition={0.08}
-            crawlSpeed={200}
-            height={3}
+            initialPosition={0.28}
+            crawlSpeed={100}
+            height={7}
             crawl={true}
             showSpinner={true}
             easing="ease"
